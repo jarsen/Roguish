@@ -59,7 +59,7 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(westWallNode)
         
         let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
-        floor.materials.first!.diffuse.contents = UIColor.blueColor()
+        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
         let floorNode = SCNNode(geometry: floor)
         scene.rootNode.addChildNode(floorNode)
         
