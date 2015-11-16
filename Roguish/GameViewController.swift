@@ -29,7 +29,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
+        scene.rootNode.rotation = SCNVector4Make(0, Float(M_PI), 0, 1)
         
         // create and add a camera to the scene
         let cameraNode = SCNNode()
@@ -50,13 +51,17 @@ class GameViewController: UIViewController {
         ambientLightNode.light = SCNLight(type: SCNLightTypeAmbient, color: .darkGrayColor())
         scene.rootNode.addChildNode(ambientLightNode)
         
-        // retrieve the ship node
-        let ship = scene.rootNode.childNodeWithName("ship", recursively: true)!
         
-        // animate the 3d object
-        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
+        let westWall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+        westWall.materials.first!.diffuse.contents = UIColor.redColor()
+        let westWallNode = SCNNode(geometry: westWall)
+        westWallNode.position = SCNVector3Make(-0.5, 0.5, 0)
+        scene.rootNode.addChildNode(westWallNode)
         
-        // retrieve the SCNView
+        let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
+        floor.materials.first!.diffuse.contents = UIColor.blueColor()
+        let floorNode = SCNNode(geometry: floor)
+        scene.rootNode.addChildNode(floorNode)
         
         // set the scene to the view
         sceneView.scene = scene
@@ -82,7 +87,7 @@ class GameViewController: UIViewController {
         // check what nodes are tapped
         let p = gestureRecognize.locationInView(scnView)
         let hitResults = scnView.hitTest(p, options: nil)
-        // check that we clicked on at least one object
+        // check that we clicked on at lwest one object
         if hitResults.count > 0 {
             // retrieved the first clicked object
             guard let result = hitResults.first,
