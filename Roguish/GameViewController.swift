@@ -10,8 +10,21 @@ import UIKit
 import QuartzCore
 import SceneKit
 
-class GameViewController: UIViewController {
+extension SCNLight {
+    convenience init(type: String, color lightColor: UIColor? = nil) {
+        self.init()
+        self.type = type
+        if let lightColor = lightColor {
+            self.color = lightColor
+        }
+    }
+}
 
+class GameViewController: UIViewController {
+    var sceneView: SCNView {
+        return view as! SCNView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,16 +41,13 @@ class GameViewController: UIViewController {
         
         // create and add a light to the scene
         let lightNode = SCNNode()
-        lightNode.light = SCNLight()
-        lightNode.light!.type = SCNLightTypeOmni
+        lightNode.light = SCNLight(type: SCNLightTypeOmni)
         lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
         scene.rootNode.addChildNode(lightNode)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
-        ambientLightNode.light = SCNLight()
-        ambientLightNode.light!.type = SCNLightTypeAmbient
-        ambientLightNode.light!.color = UIColor.darkGrayColor()
+        ambientLightNode.light = SCNLight(type: SCNLightTypeAmbient, color: .darkGrayColor())
         scene.rootNode.addChildNode(ambientLightNode)
         
         // retrieve the ship node
@@ -47,23 +57,22 @@ class GameViewController: UIViewController {
         ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
         
         // retrieve the SCNView
-        let scnView = self.view as! SCNView
         
         // set the scene to the view
-        scnView.scene = scene
+        sceneView.scene = scene
         
         // allows the user to manipulate the camera
-        scnView.allowsCameraControl = true
+        sceneView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
-        scnView.showsStatistics = true
+        sceneView.showsStatistics = true
         
         // configure the view
-        scnView.backgroundColor = UIColor.blackColor()
+        sceneView.backgroundColor = .blackColor()
         
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-        scnView.addGestureRecognizer(tapGesture)
+        sceneView.addGestureRecognizer(tapGesture)
     }
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
@@ -76,10 +85,10 @@ class GameViewController: UIViewController {
         // check that we clicked on at least one object
         if hitResults.count > 0 {
             // retrieved the first clicked object
-            let result: AnyObject! = hitResults[0]
-            
-            // get its material
-            let material = result.node!.geometry!.firstMaterial!
+            guard let result = hitResults.first,
+                material = result.node.geometry?.firstMaterial else {
+                    return
+            }
             
             // highlight it
             SCNTransaction.begin()
@@ -115,11 +124,6 @@ class GameViewController: UIViewController {
         } else {
             return .All
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
     }
 
 }
