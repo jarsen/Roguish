@@ -53,7 +53,7 @@ class GameViewController: UIViewController {
         
         
         let westWall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
-        westWall.materials.first!.diffuse.contents = UIColor.redColor()
+        westWall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let westWallNode = SCNNode(geometry: westWall)
         westWallNode.position = SCNVector3Make(-0.5, 0.5, 0)
         scene.rootNode.addChildNode(westWallNode)
