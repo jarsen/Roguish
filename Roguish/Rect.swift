@@ -18,7 +18,7 @@ extension Rect {
     func probabilityOfBinaryPartition() -> Double {
         let area = Double(size.area)
         switch area {
-        case 0...30:
+        case 0...50:
             return 0
         default:
             return min(1, (1 / 100) * area)
@@ -27,7 +27,6 @@ extension Rect {
     
     func binaryPartition(minWidth minWidth: Int, minHeight: Int) -> (Rect, Rect)? {
         guard size.width > minWidth && size.height > minHeight else {
-//            fatalError("Tried to partition too small of rect: \(self)")
             return nil
         }
         
@@ -75,10 +74,15 @@ extension Rect {
         }
         
         
-        // - 2 because we don't want it to either of the edges
-        let width = Int.random(lower: minWidth, upper: size.width - 2)
+        // pick a random width and height
+        let width = Int.random(lower: minWidth, upper: size.width - 2) // -2 because we don't want it touch either of the edges
         let height = Int.random(lower: minHeight, upper: size.height - 2)
-        return Rect(origin: origin, size: Size(width: width, height: height))
+        
+        // pick a random x and y
+        let x = Int.random(lower: origin.x, upper: origin.x + size.width - width)
+        let y = Int.random(lower: origin.y, upper: origin.y + size.height - height)
+        
+        return Rect(origin: Point(x, y), size: Size(width: width, height: height))
     }
 }
 
