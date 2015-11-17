@@ -28,6 +28,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        generateMap()
+        
         // create a new scene
         let scene = SCNScene()
         scene.rootNode.rotation = SCNVector4Make(0, Float(M_PI), 0, 1)
@@ -78,6 +80,12 @@ class GameViewController: UIViewController {
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
         sceneView.addGestureRecognizer(tapGesture)
+    }
+    
+    func generateMap() {
+        let map = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
+        let root = DungeonNode(partition: map)
+        printRooms(root)
     }
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
