@@ -98,19 +98,3 @@ extension DungeonNode : CustomStringConvertible {
         }
     }
 }
-
-func printRooms(root: DungeonNode) {
-    let (width, height) = (root.partition.size.width, root.partition.size.height)
-    for x in 0..<width {
-        var row = ""
-        for y in 0..<height{
-            if root.pointIsInRoom(Point(x, y)) {
-                row += " "
-            }
-            else {
-                row += "█"
-            }
-        }
-        print(row)
-    }
-}

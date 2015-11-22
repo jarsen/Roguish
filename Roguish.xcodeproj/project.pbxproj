@@ -21,6 +21,7 @@
 		1E5CDAAD1BFACFEC00FA1FF4 /* DungeonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAAC1BFACFEC00FA1FF4 /* DungeonNode.swift */; };
 		1E5CDAAF1BFAD02300FA1FF4 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAAE1BFAD02300FA1FF4 /* Room.swift */; };
 		1E5CDAB11BFAD03300FA1FF4 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAB01BFAD03300FA1FF4 /* Random.swift */; };
+		1E8BF53E1C014B8100DC4798 /* Dungeon2DMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8BF53D1C014B8100DC4798 /* Dungeon2DMap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		1E5CDAAC1BFACFEC00FA1FF4 /* DungeonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DungeonNode.swift; sourceTree = "<group>"; };
 		1E5CDAAE1BFAD02300FA1FF4 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		1E5CDAB01BFAD03300FA1FF4 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		1E8BF53D1C014B8100DC4798 /* Dungeon2DMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dungeon2DMap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				1E5CDAA81BFACF7800FA1FF4 /* Rect.swift */,
 				1E5CDAAE1BFAD02300FA1FF4 /* Room.swift */,
 				1E5CDAAC1BFACFEC00FA1FF4 /* DungeonNode.swift */,
+				1E8BF53D1C014B8100DC4798 /* Dungeon2DMap.swift */,
 				1E5CDAB01BFAD03300FA1FF4 /* Random.swift */,
 				1E5CDAAA1BFACFB300FA1FF4 /* Size.swift */,
 			);
@@ -289,6 +292,7 @@
 				1E5CDAB11BFAD03300FA1FF4 /* Random.swift in Sources */,
 				1E15F0DF1BFA860E003F0367 /* GameViewController.swift in Sources */,
 				1E5CDAAB1BFACFB300FA1FF4 /* Size.swift in Sources */,
+				1E8BF53E1C014B8100DC4798 /* Dungeon2DMap.swift in Sources */,
 				1E5CDAAF1BFAD02300FA1FF4 /* Room.swift in Sources */,
 				1E15F0DB1BFA860E003F0367 /* AppDelegate.swift in Sources */,
 				1E5CDAA71BFACF6C00FA1FF4 /* Point.swift in Sources */,

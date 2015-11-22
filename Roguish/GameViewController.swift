@@ -25,13 +25,21 @@ class GameViewController: UIViewController {
         return view as! SCNView
     }
     
+    var scene: SCNScene!
+    
+    var map: Dungeon2DMap? {
+        didSet {
+            if let map = map {
+                init3DMapRepresentation(map)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        generateMap()
-        
         // create a new scene
-        let scene = SCNScene()
+        scene = SCNScene()
         scene.rootNode.rotation = SCNVector4Make(0, Float(M_PI), 0, 1)
         
         // create and add a camera to the scene
@@ -53,17 +61,18 @@ class GameViewController: UIViewController {
         ambientLightNode.light = SCNLight(type: SCNLightTypeAmbient, color: .darkGrayColor())
         scene.rootNode.addChildNode(ambientLightNode)
         
+        generateMap()
         
-        let westWall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
-        westWall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
-        let westWallNode = SCNNode(geometry: westWall)
-        westWallNode.position = SCNVector3Make(-0.5, 0.5, 0)
-        scene.rootNode.addChildNode(westWallNode)
-        
-        let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
-        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
-        let floorNode = SCNNode(geometry: floor)
-        scene.rootNode.addChildNode(floorNode)
+//        let westWall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+//        westWall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
+//        let westWallNode = SCNNode(geometry: westWall)
+//        westWallNode.position = SCNVector3Make(-0.5, 0.5, 0)
+//        scene.rootNode.addChildNode(westWallNode)
+//        
+//        let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
+//        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
+//        let floorNode = SCNNode(geometry: floor)
+//        scene.rootNode.addChildNode(floorNode)
         
         // set the scene to the view
         sceneView.scene = scene
@@ -83,9 +92,55 @@ class GameViewController: UIViewController {
     }
     
     func generateMap() {
-        let map = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
-        let root = DungeonNode(partition: map)
-        printRooms(root)
+        let mapRect = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
+        let root = DungeonNode(partition: mapRect)
+        map = Dungeon2DMap(dungeon: root)
+    }
+    
+    func init3DMapRepresentation(map: Dungeon2DMap) {
+        for x in 0..<map.width {
+            for y in 0..<map.height {
+                if map.isRoom(x, y) {
+                    addFloor(x, y)
+                    if map.hasNorthWall(x, y) {
+                        addNorthWall(x, y)
+                    }
+                    if map.hasEastWall(x, y) {
+                        addEastWall(x, y)
+                    }
+                    if map.hasSouthWall(x, y) {
+                        addSouthWall(x, y)
+                    }
+                    if map.hasWestWall(x, y) {
+                        addWestWall(x, y)
+                    }
+                }
+            }
+        }
+    }
+    
+    func addFloor(x: Int, _ y: Int) {
+        let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
+        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
+        let floorNode = SCNNode(geometry: floor)
+        floorNode.position = SCNVector3Make(Float(x), 0, Float(y))
+        scene.rootNode.addChildNode(floorNode)
+    }
+    
+    func addNorthWall(x: Int, _ y: Int) {
+        
+    }
+    
+    func addEastWall(x: Int, _ y: Int) {
+        
+    }
+    
+    func addSouthWall(x: Int, _ y: Int) {
+        
+    }
+    
+    func addWestWall(x: Int, _ y: Int) {
+        
     }
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
