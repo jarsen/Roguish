@@ -48,7 +48,6 @@ class GameViewController: UIViewController {
         
         // place the camera
         cameraNode.position = SCNVector3(x: 25, y: 40, z: 25)
-        cameraNode.rotation = SCNVector4Make(Float(M_PI_2), 0, 0, 1)
         
         // create and add a light to the scene
         let lightNode = SCNNode()
@@ -62,18 +61,7 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(ambientLightNode)
         
         generateMap()
-        
-//        let westWall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
-//        westWall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
-//        let westWallNode = SCNNode(geometry: westWall)
-//        westWallNode.position = SCNVector3Make(-0.5, 0.5, 0)
-//        scene.rootNode.addChildNode(westWallNode)
-//
-//        let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
-//        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
-//        let floorNode = SCNNode(geometry: floor)
-//        scene.rootNode.addChildNode(floorNode)
-        
+
         // set the scene to the view
         sceneView.scene = scene
         
@@ -130,24 +118,41 @@ class GameViewController: UIViewController {
     }
     
     func addNorthWall(x: Int, _ y: Int) {
-        
+        let z = map.height - 1 - y
+        let wall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+        wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
+        let wallNode = SCNNode(geometry: wall)
+        wallNode.position = SCNVector3Make(Float(x) - 0.5, 0.5, Float(z))
+        scene.rootNode.addChildNode(wallNode)
+        wallNode.rotation = SCNVector4Make(0, Float(M_PI_2), 0, 0)
     }
     
     func addEastWall(x: Int, _ y: Int) {
-//        let wall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
-//        wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
-//        let wallNode = SCNNode(geometry: wall)
-//        wallNode.position = SCNVector3Make(Float(x) - 0.5, 0.5, Float(y))
-//        scene.rootNode.addChildNode(wallNode)
-//        wallNode.rotation = SCNVector4Make(0, Float(M_PI), 0, 0)
+        let z = map.height - 1 - y
+        let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
+        wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
+        let wallNode = SCNNode(geometry: wall)
+        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(z) + 0.5)
+        scene.rootNode.addChildNode(wallNode)
     }
     
     func addSouthWall(x: Int, _ y: Int) {
-        
+        let z = map.height - 1 - y
+        let wall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+        wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
+        let wallNode = SCNNode(geometry: wall)
+        wallNode.position = SCNVector3Make(Float(x) + 0.5, 0.5, Float(z))
+        scene.rootNode.addChildNode(wallNode)
+        wallNode.rotation = SCNVector4Make(0, Float(M_PI_2), 0, 0)
     }
     
     func addWestWall(x: Int, _ y: Int) {
-        
+        let z = map.height - 1 - y
+        let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
+        wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
+        let wallNode = SCNNode(geometry: wall)
+        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(z) - 0.5)
+        scene.rootNode.addChildNode(wallNode)
     }
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
