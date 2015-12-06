@@ -32,10 +32,12 @@ struct Dungeon2DMap {
     let map: [[Cell]]
     let width: Int
     let height: Int
+    let startPoint: Point
+    let endPoint: Point
     
     init(dungeon: DungeonNode, hallways: [Hallway]) {
-        let startPoint = dungeon.firstLeaf().room!.rect.randomInnerPoint()
-        let endPoint = dungeon.lastLeaf().room!.rect.randomInnerPoint()
+        startPoint = dungeon.firstLeaf().room!.rect.randomInnerPoint()
+        endPoint = dungeon.lastLeaf().room!.rect.randomInnerPoint()
         let (width, height) = (dungeon.partition.size.width, dungeon.partition.size.height)
         var map = [[Cell]](count: height, repeatedValue: [Cell](count: width, repeatedValue: .Wall))
         for x in 0..<width {

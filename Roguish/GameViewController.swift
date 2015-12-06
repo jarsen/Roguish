@@ -46,9 +46,6 @@ class GameViewController: UIViewController {
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
         
-        // place the camera
-        cameraNode.position = SCNVector3(x: 25, y: 40, z: 25)
-        
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight(type: SCNLightTypeOmni)
@@ -60,7 +57,11 @@ class GameViewController: UIViewController {
         ambientLightNode.light = SCNLight(type: SCNLightTypeAmbient, color: .darkGrayColor())
         scene.rootNode.addChildNode(ambientLightNode)
         
-        generateMap()
+        map = generateMap()
+        guard let map = map else { fatalError() }
+        
+        // place the camera
+        cameraNode.position = SCNVector3(x: Float(map.startPoint.x), y: 0.5, z: Float(map.startPoint.y))
 
         // set the scene to the view
         sceneView.scene = scene
@@ -75,16 +76,17 @@ class GameViewController: UIViewController {
         sceneView.backgroundColor = .blackColor()
         
         // add a tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-        sceneView.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+//        sceneView.addGestureRecognizer(tapGesture)
     }
     
-    func generateMap() {
+    func generateMap() -> Dungeon2DMap {
         let mapRect = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
         let root = DungeonNode(partition: mapRect)
         let hallways = root.generateHallways()
-        map = Dungeon2DMap(dungeon: root, hallways: hallways)
+        let map = Dungeon2DMap(dungeon: root, hallways: hallways)
         print(map)
+        return map
     }
     
     func init3DMapRepresentation(map: Dungeon2DMap) {
