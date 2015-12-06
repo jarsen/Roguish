@@ -13,8 +13,8 @@
 		1E15F0E21BFA860E003F0367 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E01BFA860E003F0367 /* Main.storyboard */; };
 		1E15F0E41BFA860E003F0367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E31BFA860E003F0367 /* Assets.xcassets */; };
 		1E15F0E71BFA860E003F0367 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E51BFA860E003F0367 /* LaunchScreen.storyboard */; };
-		1E15F0F21BFA860E003F0367 /* RoguishTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15F0F11BFA860E003F0367 /* RoguishTests.swift */; };
-		1E15F0FD1BFA860E003F0367 /* RoguishUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E15F0FC1BFA860E003F0367 /* RoguishUITests.swift */; };
+		1E5C495B1C13A044005A6AE0 /* Hallway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5C495A1C13A044005A6AE0 /* Hallway.swift */; };
+		1E5C495D1C13A5DB005A6AE0 /* HallwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5C495C1C13A5DB005A6AE0 /* HallwayTests.swift */; };
 		1E5CDAA71BFACF6C00FA1FF4 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAA61BFACF6C00FA1FF4 /* Point.swift */; };
 		1E5CDAA91BFACF7800FA1FF4 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAA81BFACF7800FA1FF4 /* Rect.swift */; };
 		1E5CDAAB1BFACFB300FA1FF4 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5CDAAA1BFACFB300FA1FF4 /* Size.swift */; };
@@ -26,13 +26,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		1E15F0EE1BFA860E003F0367 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1E15F0CF1BFA860E003F0367 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1E15F0D61BFA860E003F0367;
-			remoteInfo = Roguish;
-		};
-		1E15F0F91BFA860E003F0367 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1E15F0CF1BFA860E003F0367 /* Project object */;
 			proxyType = 1;
@@ -51,11 +44,9 @@
 		1E15F0E61BFA860E003F0367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E15F0E81BFA860E003F0367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E15F0ED1BFA860E003F0367 /* RoguishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoguishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1E15F0F11BFA860E003F0367 /* RoguishTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoguishTests.swift; sourceTree = "<group>"; };
 		1E15F0F31BFA860E003F0367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1E15F0F81BFA860E003F0367 /* RoguishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoguishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1E15F0FC1BFA860E003F0367 /* RoguishUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoguishUITests.swift; sourceTree = "<group>"; };
-		1E15F0FE1BFA860E003F0367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E5C495A1C13A044005A6AE0 /* Hallway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hallway.swift; sourceTree = "<group>"; };
+		1E5C495C1C13A5DB005A6AE0 /* HallwayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HallwayTests.swift; sourceTree = "<group>"; };
 		1E5CDAA61BFACF6C00FA1FF4 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		1E5CDAA81BFACF7800FA1FF4 /* Rect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		1E5CDAAA1BFACFB300FA1FF4 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -80,13 +71,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1E15F0F51BFA860E003F0367 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -95,7 +79,6 @@
 			children = (
 				1E15F0D91BFA860E003F0367 /* Roguish */,
 				1E15F0F01BFA860E003F0367 /* RoguishTests */,
-				1E15F0FB1BFA860E003F0367 /* RoguishUITests */,
 				1E15F0D81BFA860E003F0367 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -105,7 +88,6 @@
 			children = (
 				1E15F0D71BFA860E003F0367 /* Roguish.app */,
 				1E15F0ED1BFA860E003F0367 /* RoguishTests.xctest */,
-				1E15F0F81BFA860E003F0367 /* RoguishUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,19 +110,10 @@
 		1E15F0F01BFA860E003F0367 /* RoguishTests */ = {
 			isa = PBXGroup;
 			children = (
-				1E15F0F11BFA860E003F0367 /* RoguishTests.swift */,
 				1E15F0F31BFA860E003F0367 /* Info.plist */,
+				1E5C495C1C13A5DB005A6AE0 /* HallwayTests.swift */,
 			);
 			path = RoguishTests;
-			sourceTree = "<group>";
-		};
-		1E15F0FB1BFA860E003F0367 /* RoguishUITests */ = {
-			isa = PBXGroup;
-			children = (
-				1E15F0FC1BFA860E003F0367 /* RoguishUITests.swift */,
-				1E15F0FE1BFA860E003F0367 /* Info.plist */,
-			);
-			path = RoguishUITests;
 			sourceTree = "<group>";
 		};
 		1E5CDAA51BFACF6000FA1FF4 /* DungeonGenerator */ = {
@@ -150,6 +123,7 @@
 				1E5CDAA81BFACF7800FA1FF4 /* Rect.swift */,
 				1E5CDAAE1BFAD02300FA1FF4 /* Room.swift */,
 				1E5CDAAC1BFACFEC00FA1FF4 /* DungeonNode.swift */,
+				1E5C495A1C13A044005A6AE0 /* Hallway.swift */,
 				1E8BF53D1C014B8100DC4798 /* Dungeon2DMap.swift */,
 				1E5CDAB01BFAD03300FA1FF4 /* Random.swift */,
 				1E5CDAAA1BFACFB300FA1FF4 /* Size.swift */,
@@ -195,24 +169,6 @@
 			productReference = 1E15F0ED1BFA860E003F0367 /* RoguishTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		1E15F0F71BFA860E003F0367 /* RoguishUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1E15F1071BFA860E003F0367 /* Build configuration list for PBXNativeTarget "RoguishUITests" */;
-			buildPhases = (
-				1E15F0F41BFA860E003F0367 /* Sources */,
-				1E15F0F51BFA860E003F0367 /* Frameworks */,
-				1E15F0F61BFA860E003F0367 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1E15F0FA1BFA860E003F0367 /* PBXTargetDependency */,
-			);
-			name = RoguishUITests;
-			productName = RoguishUITests;
-			productReference = 1E15F0F81BFA860E003F0367 /* RoguishUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -227,10 +183,6 @@
 						CreatedOnToolsVersion = 7.1;
 					};
 					1E15F0EC1BFA860E003F0367 = {
-						CreatedOnToolsVersion = 7.1;
-						TestTargetID = 1E15F0D61BFA860E003F0367;
-					};
-					1E15F0F71BFA860E003F0367 = {
 						CreatedOnToolsVersion = 7.1;
 						TestTargetID = 1E15F0D61BFA860E003F0367;
 					};
@@ -251,7 +203,6 @@
 			targets = (
 				1E15F0D61BFA860E003F0367 /* Roguish */,
 				1E15F0EC1BFA860E003F0367 /* RoguishTests */,
-				1E15F0F71BFA860E003F0367 /* RoguishUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -275,13 +226,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1E15F0F61BFA860E003F0367 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -291,6 +235,7 @@
 			files = (
 				1E5CDAB11BFAD03300FA1FF4 /* Random.swift in Sources */,
 				1E15F0DF1BFA860E003F0367 /* GameViewController.swift in Sources */,
+				1E5C495B1C13A044005A6AE0 /* Hallway.swift in Sources */,
 				1E5CDAAB1BFACFB300FA1FF4 /* Size.swift in Sources */,
 				1E8BF53E1C014B8100DC4798 /* Dungeon2DMap.swift in Sources */,
 				1E5CDAAF1BFAD02300FA1FF4 /* Room.swift in Sources */,
@@ -305,15 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E15F0F21BFA860E003F0367 /* RoguishTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1E15F0F41BFA860E003F0367 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1E15F0FD1BFA860E003F0367 /* RoguishUITests.swift in Sources */,
+				1E5C495D1C13A5DB005A6AE0 /* HallwayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,11 +261,6 @@
 			isa = PBXTargetDependency;
 			target = 1E15F0D61BFA860E003F0367 /* Roguish */;
 			targetProxy = 1E15F0EE1BFA860E003F0367 /* PBXContainerItemProxy */;
-		};
-		1E15F0FA1BFA860E003F0367 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1E15F0D61BFA860E003F0367 /* Roguish */;
-			targetProxy = 1E15F0F91BFA860E003F0367 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -482,31 +414,6 @@
 			};
 			name = Release;
 		};
-		1E15F1081BFA860E003F0367 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = RoguishUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = us.heartbit.RoguishUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Roguish;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		1E15F1091BFA860E003F0367 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = RoguishUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = us.heartbit.RoguishUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Roguish;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -533,15 +440,6 @@
 			buildConfigurations = (
 				1E15F1051BFA860E003F0367 /* Debug */,
 				1E15F1061BFA860E003F0367 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1E15F1071BFA860E003F0367 /* Build configuration list for PBXNativeTarget "RoguishUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1E15F1081BFA860E003F0367 /* Debug */,
-				1E15F1091BFA860E003F0367 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

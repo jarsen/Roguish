@@ -12,6 +12,22 @@ import Foundation
 struct Rect {
     var origin: Point
     var size: Size
+    
+    var minX: Int {
+        return origin.x
+    }
+    
+    var maxX: Int {
+        return origin.x + size.width
+    }
+    
+    var minY: Int {
+        return origin.y
+    }
+    
+    var maxY: Int {
+        return origin.y + size.height
+    }
 }
 
 extension Rect {

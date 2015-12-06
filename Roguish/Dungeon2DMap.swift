@@ -18,13 +18,19 @@ struct Dungeon2DMap {
     let width: Int
     let height: Int
     
-    init(dungeon: DungeonNode) {
+    init(dungeon: DungeonNode, hallways: [Hallway]) {
         let (width, height) = (dungeon.partition.size.width, dungeon.partition.size.height)
         var map = [[Cell]](count: height, repeatedValue: [Cell](count: width, repeatedValue: .Wall))
         for x in 0..<width {
             for y in 0..<height{
-                if dungeon.pointIsInRoom(Point(x, y)) {
+                let point = Point(x, y)
+                if dungeon.containsPoint(point) {
                     map[x][y] = .Room
+                }
+                else {
+                    for hallway in hallways where hallway.containsPoint(point) {
+                        map[x][y] = .Room
+                    }
                 }
             }
         }

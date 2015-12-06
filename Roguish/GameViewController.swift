@@ -82,7 +82,8 @@ class GameViewController: UIViewController {
     func generateMap() {
         let mapRect = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
         let root = DungeonNode(partition: mapRect)
-        map = Dungeon2DMap(dungeon: root)
+        let hallways = root.generateHallways()
+        map = Dungeon2DMap(dungeon: root, hallways: hallways)
         print(map)
     }
     

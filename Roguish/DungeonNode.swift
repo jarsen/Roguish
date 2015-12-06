@@ -48,12 +48,12 @@ class DungeonNode {
         return nil
     }
     
-    func isLeaf() -> Bool {
+    var isLeaf: Bool {
         return left == nil && right == nil
     }
     
     func rooms() -> [Room] {
-        if isLeaf() {
+        if isLeaf {
             if let room = room {
                 return [room]
             }
@@ -71,8 +71,8 @@ class DungeonNode {
         }
     }
     
-    func pointIsInRoom(point: Point) -> Bool {
-        if isLeaf() {
+    func containsPoint(point: Point) -> Bool {
+        if isLeaf {
             if let room = room {
                 return room.rect.containsPoint(point)
             }
@@ -81,16 +81,45 @@ class DungeonNode {
             }
         }
         else {
-            let leftBool = left?.pointIsInRoom(point) ?? false
-            let rightBool = right?.pointIsInRoom(point) ?? false
+            let leftBool = left?.containsPoint(point) ?? false
+            let rightBool = right?.containsPoint(point) ?? false
             return leftBool || rightBool
         }
+    }
+    
+    func generateHallways() -> [Hallway] {
+        guard let left = left, right = right else {
+            // the tree should be full. if there aren't left and right, this is a leaf
+            return []
+        }
+        
+        var hallways = [Hallway]()
+        
+        // connect the nodes post-order traversal
+        hallways.appendContentsOf(left.generateHallways())
+        hallways.appendContentsOf(right.generateHallways())
+        
+        switch (left.isLeaf, right.isLeaf) {
+        case (true, true):
+            hallways.append(Hallway.betweenRooms(left.room!, right.room!))
+        case (true, false):
+            // connect the left room to a room in the right subtree
+            break
+        case (false, true):
+            // connect a room in the left subtree to room on the right
+            break
+        case (false, false):
+            // connect a room in the left subtree to a room on the right
+            break
+        }
+        
+        return hallways
     }
 }
 
 extension DungeonNode : CustomStringConvertible {
     var description: String {
-        if isLeaf() {
+        if isLeaf {
             return "Room. Parition: \(partition)"
         }
         else {
