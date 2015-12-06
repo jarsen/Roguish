@@ -23,3 +23,11 @@ extension Point : CustomStringConvertible {
         return "(\(x), \(y))"
     }
 }
+
+extension Point : Equatable {
+    
+}
+
+func == (lhs: Point, rhs: Point) -> Bool {
+    return lhs.x == rhs.x && lhs.y == rhs.y
+}

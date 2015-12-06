@@ -104,16 +104,29 @@ class DungeonNode {
             hallways.append(Hallway.betweenRooms(left.room!, right.room!))
         case (true, false):
             // connect the left room to a room in the right subtree
-            break
+            let rightLeaf = right.firstLeaf()
+            hallways.append(Hallway.betweenRooms(left.room!, rightLeaf.room!))
         case (false, true):
             // connect a room in the left subtree to room on the right
+            let leftLeaf = right.firstLeaf()
+            hallways.append(Hallway.betweenRooms(leftLeaf.room!, right.room!))
             break
         case (false, false):
             // connect a room in the left subtree to a room on the right
+            let leftLeaf = right.firstLeaf()
+            let rightLeaf = right.firstLeaf()
+            hallways.append(Hallway.betweenRooms(leftLeaf.room!, rightLeaf.room!))
             break
         }
         
         return hallways
+    }
+    
+    func firstLeaf() -> DungeonNode {
+        guard let left = left, _ = right else {
+            return self
+        }
+        return left.firstLeaf()
     }
 }
 

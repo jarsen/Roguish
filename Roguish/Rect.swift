@@ -21,12 +21,20 @@ struct Rect {
         return origin.x + size.width
     }
     
+    var midX: Int {
+        return (maxX + minX) / 2
+    }
+    
     var minY: Int {
         return origin.y
     }
     
     var maxY: Int {
         return origin.y + size.height
+    }
+    
+    var midY: Int {
+        return (maxY + minY) / 2
     }
 }
 
@@ -106,4 +114,10 @@ extension Rect : CustomStringConvertible {
     var description: String {
         return "\(size) at \(origin)"
     }
+}
+
+extension Rect : Equatable { }
+
+func == (lhs: Rect, rhs: Rect) -> Bool {
+    return lhs.origin == rhs.origin && lhs.size == rhs.size
 }

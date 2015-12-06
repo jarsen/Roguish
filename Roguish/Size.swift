@@ -22,3 +22,11 @@ extension Size : CustomStringConvertible {
         return "\(width)x\(height)"
     }
 }
+
+extension Size : Equatable {
+    
+}
+
+func == (lhs: Size, rhs: Size) -> Bool {
+    return lhs.width == rhs.width && lhs.height == rhs.height
+}
