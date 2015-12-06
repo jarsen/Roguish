@@ -215,14 +215,14 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         guard let gamepad = GCController.controllers().first?.extendedGamepad else { return }
         
         let leftRightRotation = CGFloat(gamepad.leftThumbstick.xAxis.value) * -0.1
-        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
-        let rotationAction = SCNAction.rotateByX(upDownRotation, y: leftRightRotation, z: 0, duration: 0.1)
+//        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
+        let rotationAction = SCNAction.rotateByX(0, y: leftRightRotation, z: 0, duration: 0.0)
         
         let leftRightMovement = gamepad.rightThumbstick.xAxis.value * 0.1
         let forwardBackMovement = gamepad.rightThumbstick.yAxis.value * -0.1
         var movement = cameraNode.rotation * SCNVector3(x: leftRightMovement, y: 0, z: forwardBackMovement)
         movement.y = 0
-        let movementAction = SCNAction.moveBy(movement, duration: 0.1)
+        let movementAction = SCNAction.moveBy(movement, duration: 0.0)
         
         let action = SCNAction.group([rotationAction, movementAction])
         cameraNode.runAction(action)
