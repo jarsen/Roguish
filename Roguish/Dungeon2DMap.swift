@@ -11,7 +11,7 @@ import UIKit
 struct Dungeon2DMap {
     enum Cell : String {
         case Room = " "
-        case Wall = "█"
+        case Wall = "W"
         case Start = "S"
         case End = "E"
         

@@ -9,6 +9,7 @@
 import UIKit
 import QuartzCore
 import SceneKit
+import GameController
 
 extension SCNLight {
     convenience init(type: String, color lightColor: UIColor? = nil) {
@@ -20,12 +21,15 @@ extension SCNLight {
     }
 }
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, SCNSceneRendererDelegate {
     var sceneView: SCNView {
         return view as! SCNView
     }
     
     var scene: SCNScene!
+    var cameraNode: SCNNode!
+    
+    var controller: GCController?
     
     var map: Dungeon2DMap! {
         didSet {
@@ -42,7 +46,7 @@ class GameViewController: UIViewController {
         scene = SCNScene()
         
         // create and add a camera to the scene
-        let cameraNode = SCNNode()
+        cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
         
@@ -61,13 +65,15 @@ class GameViewController: UIViewController {
         guard let map = map else { fatalError() }
         
         // place the camera
-        cameraNode.position = SCNVector3(x: Float(map.startPoint.x), y: 0.5, z: Float(map.startPoint.y))
+        cameraNode.position = SCNVector3(x: Float(map.startPoint.x), y: 1, z: Float(map.startPoint.y))
 
         // set the scene to the view
         sceneView.scene = scene
+        sceneView.delegate = self
         
         // allows the user to manipulate the camera
-        sceneView.allowsCameraControl = true
+//        sceneView.allowsCameraControl = true
+        sceneView.playing = true
         
         // show statistics such as fps and timing information
         sceneView.showsStatistics = true
@@ -192,6 +198,39 @@ class GameViewController: UIViewController {
             SCNTransaction.commit()
         }
     }
+
+    //
+    // MARK: - Game Loop
+    //
+    
+    func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
+        readControlInputs()
+    }
+    
+    //
+    // MARK: - Controls
+    //
+    
+    func readControlInputs() {
+        guard let gamepad = GCController.controllers().first?.extendedGamepad else { return }
+        
+        let leftRightRotation = CGFloat(gamepad.leftThumbstick.xAxis.value) * -0.1
+        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
+        let rotationAction = SCNAction.rotateByX(upDownRotation, y: leftRightRotation, z: 0, duration: 0.1)
+        
+        let leftRightMovement = gamepad.rightThumbstick.xAxis.value * 0.1
+        let forwardBackMovement = gamepad.rightThumbstick.yAxis.value * -0.1
+        var movement = cameraNode.rotation * SCNVector3(x: leftRightMovement, y: 0, z: forwardBackMovement)
+        movement.y = 0
+        let movementAction = SCNAction.moveBy(movement, duration: 0.1)
+        
+        let action = SCNAction.group([rotationAction, movementAction])
+        cameraNode.runAction(action)
+    }
+    
+    //
+    // MARK: - View Rotation
+    //
     
     override func shouldAutorotate() -> Bool {
         return true
