@@ -13,6 +13,14 @@ struct Rect {
     var origin: Point
     var size: Size
     
+    init(origin: Point, size: Size) {
+        guard size.width >= 0 && size.height >= 0 else {
+            fatalError()
+        }
+        self.origin = origin
+        self.size = size
+    }
+    
     var minX: Int {
         return origin.x
     }
