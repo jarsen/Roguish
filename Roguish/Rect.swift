@@ -122,8 +122,8 @@ extension Rect {
     }
     
     func randomInnerPoint() -> Point {
-        let x = Int.random(lower: minX, upper: maxX)
-        let y = Int.random(lower: minY, upper: maxY)
+        let x = Int.random(lower: minX, upper: maxX - 1)
+        let y = Int.random(lower: minY, upper: maxY - 1)
         return Point(x, y)
     }
 }
