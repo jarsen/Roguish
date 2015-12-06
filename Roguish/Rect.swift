@@ -115,8 +115,8 @@ extension Rect {
         let height = Int.random(lower: minHeight, upper: size.height - 2)
         
         // pick a random x and y
-        let x = Int.random(lower: origin.x, upper: origin.x + size.width - width)
-        let y = Int.random(lower: origin.y, upper: origin.y + size.height - height)
+        let x = Int.random(lower: origin.x, upper: origin.x + size.width - width) + 1
+        let y = Int.random(lower: origin.y, upper: origin.y + size.height - height) + 1
         
         return Rect(origin: Point(x, y), size: Size(width: width, height: height))
     }
