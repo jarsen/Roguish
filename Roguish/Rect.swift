@@ -120,6 +120,12 @@ extension Rect {
         
         return Rect(origin: Point(x, y), size: Size(width: width, height: height))
     }
+    
+    func randomInnerPoint() -> Point {
+        let x = Int.random(lower: minX, upper: maxX)
+        let y = Int.random(lower: minY, upper: maxY)
+        return Point(x, y)
+    }
 }
 
 extension Rect : CustomStringConvertible {

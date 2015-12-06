@@ -112,7 +112,7 @@ class GameViewController: UIViewController {
     func addFloor(x: Int, _ y: Int) {
         let z = map.height - 1 - y
         let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
-        floor.materials.first!.diffuse.contents = UIImage(named: "sandstone")
+        floor.materials.first!.diffuse.contents = map.map[x][y].tileAsset
         let floorNode = SCNNode(geometry: floor)
         floorNode.position = SCNVector3Make(Float(x), 0, Float(z))
         scene.rootNode.addChildNode(floorNode)

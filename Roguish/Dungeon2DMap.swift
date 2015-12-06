@@ -6,12 +6,27 @@
 //  Copyright © 2015 Jason Larsen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Dungeon2DMap {
     enum Cell : String {
         case Room = " "
         case Wall = "█"
+        case Start = "S"
+        case End = "E"
+        
+        var tileAsset: UIImage {
+            switch self {
+            case Room:
+                return UIImage(named: "sandstone")!
+            case Wall:
+                return UIImage(named: "cobblestone")!
+            case Start:
+                return UIImage(named: "sandstone")!
+            case End:
+                return UIImage(named: "trapdoor")!
+            }
+        }
     }
     
     let map: [[Cell]]
@@ -19,12 +34,20 @@ struct Dungeon2DMap {
     let height: Int
     
     init(dungeon: DungeonNode, hallways: [Hallway]) {
+        let startPoint = dungeon.firstLeaf().room!.rect.randomInnerPoint()
+        let endPoint = dungeon.lastLeaf().room!.rect.randomInnerPoint()
         let (width, height) = (dungeon.partition.size.width, dungeon.partition.size.height)
         var map = [[Cell]](count: height, repeatedValue: [Cell](count: width, repeatedValue: .Wall))
         for x in 0..<width {
             for y in 0..<height{
                 let point = Point(x, y)
-                if dungeon.containsPoint(point) {
+                if point == startPoint {
+                    map[x][y] = .Start
+                }
+                else if point == endPoint {
+                    map[x][y] = .End
+                }
+                else if dungeon.containsPoint(point) {
                     map[x][y] = .Room
                 }
                 else {
@@ -41,7 +64,7 @@ struct Dungeon2DMap {
     }
     
     func isRoom(x: Int,_ y: Int) -> Bool {
-        return map[x][y] == .Room
+        return map[x][y] != .Wall
     }
     
     func hasNorthWall(x: Int,_ y: Int) -> Bool {
