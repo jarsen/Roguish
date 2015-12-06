@@ -41,7 +41,8 @@ class Hallway {
     }
     
     static func betweenOverlappingXRooms(first: Room, _ second: Room) -> Hallway {
-        let height = second.rect.minY - first.rect.maxY
+        let (lower, upper) = sortByY(first, second)
+        let height = upper.rect.minY - lower.rect.maxY
         let width = 1
         let size = Size(width: width, height: height)
         
@@ -55,7 +56,7 @@ class Hallway {
             fatalError("Trying to connect between non overlapping X Rooms")
         }
         
-        let origin = Point(x, first.rect.maxY)
+        let origin = Point(x, lower.rect.maxY)
         
         let rect = Rect(origin: origin, size: size)
         let hallway = Hallway(rects: [rect])
@@ -75,6 +76,8 @@ class Hallway {
             fatalError("Trying to connect between non overlapping Y Rooms")
         }
         
+        assert(first.rect.maxX <= second.rect.minX)
+        
         let origin = Point(first.rect.maxX, y)
         let size = Size(width: width, height: height)
         let rect = Rect(origin: origin, size: size)
@@ -93,14 +96,14 @@ class Hallway {
     }
     
     static func betweenNonOverlappingRoomsWithLeftLowerFromBottomWallToLeftWall(left left: Room, right: Room) -> Hallway {
-        let verticalLeg = Rect(origin: Point(left.rect.midX, left.rect.maxY), size: Size(width: 1, height: right.rect.midY - left.rect.maxY))
-        let horizontalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: right.rect.minX - left.rect.midX, height: 1))
+        let verticalLeg = Rect(origin: Point(left.rect.midX, left.rect.maxY), size: Size(width: 1, height: right.rect.midY - left.rect.maxY + 1))
+        let horizontalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: right.rect.minX - left.rect.midX + 1, height: 1))
         return Hallway(rects: [verticalLeg, horizontalLeg])
     }
     
     static func betweenNonOverlappingRoomsWithLeftLowerFromRightWallToTopWall(left left: Room, right: Room) -> Hallway {
-        let horizontalLeg = Rect(origin: Point(left.rect.maxX, left.rect.midY), size: Size(width: right.rect.midX - left.rect.maxX, height: 1))
-        let verticalLeg = Rect(origin: Point(right.rect.midX, left.rect.midY), size: Size(width: 1, height: right.rect.minY - left.rect.midY))
+        let horizontalLeg = Rect(origin: Point(left.rect.maxX, left.rect.midY), size: Size(width: right.rect.midX - left.rect.maxX + 1, height: 1))
+        let verticalLeg = Rect(origin: Point(right.rect.midX, left.rect.midY), size: Size(width: 1, height: right.rect.minY - left.rect.midY + 1))
         return Hallway(rects: [verticalLeg, horizontalLeg])
     }
     
@@ -115,17 +118,21 @@ class Hallway {
     }
     
     static func betweenNonOverlappingRoomsWithRightLowerFromTopWallToLeftWall(left left: Room, right: Room) -> Hallway {
-        let verticalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: 1, height: left.rect.minY - right.rect.midY))
-        let horizontalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: right.rect.minX - left.rect.midX, height: 1))
+        let verticalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: 1, height: left.rect.minY - right.rect.midY + 1))
+        let horizontalLeg = Rect(origin: Point(left.rect.midX, right.rect.midY), size: Size(width: right.rect.minX - left.rect.midX + 1, height: 1))
         return Hallway(rects: [verticalLeg, horizontalLeg])
     }
 
     static func betweenNonOverlappingRoomsWithRightLowerFromRightWallToBottomWall(left left: Room, right: Room) -> Hallway {
-        let horizontalLeg = Rect(origin: Point(left.rect.maxX, left.rect.midY), size: Size(width: right.rect.midX - left.rect.maxX, height: 1))
-        let verticalLeg = Rect(origin: Point(right.rect.midX, right.rect.maxY), size: Size(width: 1, height: left.rect.midY - right.rect.maxY))
+        let horizontalLeg = Rect(origin: Point(left.rect.maxX, left.rect.midY), size: Size(width: right.rect.midX - left.rect.maxX + 1, height: 1))
+        let verticalLeg = Rect(origin: Point(right.rect.midX, right.rect.maxY), size: Size(width: 1, height: left.rect.midY - right.rect.maxY + 1))
         return Hallway(rects: [verticalLeg, horizontalLeg])
     }
 
+    //
+    // MARK: - Rect Helpers
+    //
+    
     static private func sortByX(first: Room, _ second: Room) -> (Room, Room) {
         if first.rect.origin.x < second.rect.origin.x {
             return (first, second)
@@ -135,9 +142,14 @@ class Hallway {
         }
     }
     
-    //
-    // MARK: - Rect Helpers
-    //
+    static private func sortByY(first: Room, _ second: Room) -> (Room, Room) {
+        if first.rect.origin.y < second.rect.origin.y {
+            return (first, second)
+        }
+        else {
+            return (second, first)
+        }
+    }
     
     static func overlapX(a: Rect, _ b: Rect) -> Bool {
         return a.origin.x <= b.origin.x && b.origin.x < a.origin.x + a.size.width

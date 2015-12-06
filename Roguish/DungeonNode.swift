@@ -8,8 +8,8 @@
 
 import Foundation
 
-let MIN_ROOM_WIDTH = 5
-let MIN_ROOM_HEIGHT = 5
+let MIN_ROOM_WIDTH = 8
+let MIN_ROOM_HEIGHT = 8
 
 class DungeonNode {
     var partition: Rect
@@ -22,7 +22,7 @@ class DungeonNode {
         
         let probability = partition.probabilityOfBinaryPartition()
         let actual = Double(Int.random(lower: 0, upper: 100)) / 100
-        if actual < probability {
+        if actual <= probability {
             if let (l, r) = subdivide() {
                 left = l
                 right = r

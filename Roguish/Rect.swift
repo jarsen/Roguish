@@ -54,8 +54,8 @@ extension Rect {
     func probabilityOfBinaryPartition() -> Double {
         let area = Double(size.area)
         switch area {
-        case 0...50:
-            return 0
+        case 100...Double.infinity: // nothing over area 100
+            return 1
         default:
             return min(1, (1 / 100) * area)
         }
@@ -111,12 +111,12 @@ extension Rect {
         
         
         // pick a random width and height
-        let width = Int.random(lower: minWidth, upper: size.width - 2) // -2 because we don't want it touch either of the edges
-        let height = Int.random(lower: minHeight, upper: size.height - 2)
+        let width = Int.random(lower: minWidth - 4, upper: size.width)
+        let height = Int.random(lower: minHeight - 4, upper: size.height)
         
         // pick a random x and y
-        let x = Int.random(lower: origin.x, upper: origin.x + size.width - width) + 1
-        let y = Int.random(lower: origin.y, upper: origin.y + size.height - height) + 1
+        let x = Int.random(lower: origin.x, upper: origin.x + size.width - width) + 2
+        let y = Int.random(lower: origin.y, upper: origin.y + size.height - height) + 2
         
         return Rect(origin: Point(x, y), size: Size(width: width, height: height))
     }
