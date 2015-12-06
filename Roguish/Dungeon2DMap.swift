@@ -30,6 +30,7 @@ struct Dungeon2DMap {
                 else {
                     for hallway in hallways where hallway.containsPoint(point) {
                         map[x][y] = .Room
+                        break
                     }
                 }
             }
