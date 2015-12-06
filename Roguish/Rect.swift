@@ -44,6 +44,10 @@ struct Rect {
     var midY: Int {
         return (maxY + minY) / 2
     }
+    
+    func intersects(rect: Rect) -> Bool {
+        return minX < rect.maxX && maxX > rect.minX && minY < rect.maxY && maxY > rect.minY
+    }
 }
 
 extension Rect {
