@@ -11,6 +11,11 @@ import QuartzCore
 import SceneKit
 import GameController
 
+let CollisionCategoryCharacter = 2
+let CollisionCategoryEnemy = 4
+let CollisionCategoryWall = 6
+let CollisionCategoryFloor = 8
+
 extension SCNLight {
     convenience init(type: String, color lightColor: UIColor? = nil) {
         self.init()
@@ -21,7 +26,7 @@ extension SCNLight {
     }
 }
 
-class GameViewController: UIViewController, SCNSceneRendererDelegate {
+class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
     var sceneView: SCNView {
         return view as! SCNView
     }
@@ -44,10 +49,14 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         
         // create a new scene
         scene = SCNScene()
+        scene.physicsWorld.contactDelegate = self
         
         // create and add a camera to the scene
-        cameraNode = SCNNode()
+        cameraNode = SCNNode(geometry: SCNBox(width: 0.1, height: 2, length: 0.1, chamferRadius: 0))
         cameraNode.camera = SCNCamera()
+        cameraNode.physicsBody = .dynamicBody()
+        cameraNode.physicsBody!.categoryBitMask = CollisionCategoryCharacter
+        cameraNode.physicsBody!.collisionBitMask = CollisionCategoryWall | CollisionCategoryFloor
         scene.rootNode.addChildNode(cameraNode)
         
         // create and add a light to the scene
@@ -122,6 +131,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         let floor = SCNBox(width: 1, height: 0, length: 1, chamferRadius: 0)
         floor.materials.first!.diffuse.contents = map.map[x][y].tileAsset
         let floorNode = SCNNode(geometry: floor)
+        floorNode.physicsBody = .staticBody()
+        floorNode.physicsBody!.categoryBitMask = CollisionCategoryFloor
+        floorNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
         floorNode.position = SCNVector3Make(Float(x), 0, Float(z))
         scene.rootNode.addChildNode(floorNode)
     }
@@ -132,6 +144,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
         wallNode.position = SCNVector3Make(Float(x) - 0.5, 0.5, Float(z))
+        wallNode.physicsBody = .staticBody()
+        wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
+        wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
         scene.rootNode.addChildNode(wallNode)
         wallNode.rotation = SCNVector4Make(0, Float(M_PI_2), 0, 0)
     }
@@ -141,6 +156,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
+        wallNode.physicsBody = .staticBody()
+        wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
+        wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
         wallNode.position = SCNVector3Make(Float(x), 0.5, Float(z) + 0.5)
         scene.rootNode.addChildNode(wallNode)
     }
@@ -151,6 +169,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
         wallNode.position = SCNVector3Make(Float(x) + 0.5, 0.5, Float(z))
+        wallNode.physicsBody = .staticBody()
+        wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
+        wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
         scene.rootNode.addChildNode(wallNode)
         wallNode.rotation = SCNVector4Make(0, Float(M_PI_2), 0, 0)
     }
@@ -161,44 +182,12 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
         wallNode.position = SCNVector3Make(Float(x), 0.5, Float(z) - 0.5)
+        wallNode.physicsBody = .staticBody()
+        wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
+        wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
         scene.rootNode.addChildNode(wallNode)
     }
     
-    func handleTap(gestureRecognize: UIGestureRecognizer) {
-        // retrieve the SCNView
-        let scnView = self.view as! SCNView
-        
-        // check what nodes are tapped
-        let p = gestureRecognize.locationInView(scnView)
-        let hitResults = scnView.hitTest(p, options: nil)
-        // check that we clicked on at lwest one object
-        if hitResults.count > 0 {
-            // retrieved the first clicked object
-            guard let result = hitResults.first,
-                material = result.node.geometry?.firstMaterial else {
-                    return
-            }
-            
-            // highlight it
-            SCNTransaction.begin()
-            SCNTransaction.setAnimationDuration(0.5)
-            
-            // on completion - unhighlight
-            SCNTransaction.setCompletionBlock {
-                SCNTransaction.begin()
-                SCNTransaction.setAnimationDuration(0.5)
-                
-                material.emission.contents = UIColor.blackColor()
-                
-                SCNTransaction.commit()
-            }
-            
-            material.emission.contents = UIColor.redColor()
-            
-            SCNTransaction.commit()
-        }
-    }
-
     //
     // MARK: - Game Loop
     //
