@@ -53,7 +53,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         
         // create and add a camera to the scene
         cameraNode = SCNNode(geometry: SCNBox(width: 0.5, height: 2, length: 0.5, chamferRadius: 0))
-        cameraNode.camera = SCNCamera()
+        let camera = SCNCamera()
+        camera.zNear = 0.01
+        cameraNode.camera = camera
         cameraNode.physicsBody = .dynamicBody()
         cameraNode.physicsBody!.categoryBitMask = CollisionCategoryCharacter
         cameraNode.physicsBody!.collisionBitMask = CollisionCategoryWall | CollisionCategoryFloor
