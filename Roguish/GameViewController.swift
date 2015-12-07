@@ -52,7 +52,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         scene.physicsWorld.contactDelegate = self
         
         // create and add a camera to the scene
-        cameraNode = SCNNode(geometry: SCNBox(width: 0.1, height: 2, length: 0.1, chamferRadius: 0))
+        cameraNode = SCNNode(geometry: SCNBox(width: 0.5, height: 2, length: 0.5, chamferRadius: 0))
         cameraNode.camera = SCNCamera()
         cameraNode.physicsBody = .dynamicBody()
         cameraNode.physicsBody!.categoryBitMask = CollisionCategoryCharacter
