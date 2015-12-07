@@ -13,8 +13,8 @@ import GameController
 
 let CollisionCategoryCharacter = 2
 let CollisionCategoryEnemy = 4
-let CollisionCategoryWall = 6
-let CollisionCategoryFloor = 8
+let CollisionCategoryWall = 8
+let CollisionCategoryFloor = 16
 
 extension SCNLight {
     convenience init(type: String, color lightColor: UIColor? = nil) {
@@ -156,7 +156,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
-        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) + 0.5)
+        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) - 0.5)
         scene.rootNode.addChildNode(wallNode)
     }
     
@@ -176,7 +176,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
-        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) - 0.5)
+        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) + 0.5)
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
