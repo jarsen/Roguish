@@ -92,9 +92,12 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         // configure the view
         sceneView.backgroundColor = .blackColor()
         
-        // add a tap gesture recognizer
-//        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-//        sceneView.addGestureRecognizer(tapGesture)
+        // add gesture recognizers
+        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+        sceneView.addGestureRecognizer(tapGesture)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        sceneView.addGestureRecognizer(panGesture)
     }
     
     func generateMap() -> Dungeon2DMap {
@@ -201,7 +204,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         guard let gamepad = GCController.controllers().first?.extendedGamepad else { return }
         
         let leftRightRotation = CGFloat(gamepad.leftThumbstick.xAxis.value) * -0.1
-//        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
+//        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
         let rotationAction = SCNAction.rotateByX(0, y: leftRightRotation, z: 0, duration: 0.0)
         
         let leftRightMovement = gamepad.rightThumbstick.xAxis.value * 0.1
@@ -212,6 +215,50 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         
         let action = SCNAction.group([rotationAction, movementAction])
         cameraNode.runAction(action)
+    }
+    
+    func handleTap(gestureRecognize: UIGestureRecognizer) {
+        let p = gestureRecognize.locationInView(sceneView)
+        let hitResults = sceneView.hitTest(p, options: nil)
+        
+        if hitResults.count > 0 {
+            // retrieved the first clicked object
+            let result = hitResults[0].node
+            
+            // get its material
+            let material = result.geometry!.firstMaterial!
+            
+            // highlight it
+            SCNTransaction.begin()
+            SCNTransaction.setAnimationDuration(0.5)
+            
+            // on completion - unhighlight
+            SCNTransaction.setCompletionBlock {
+                SCNTransaction.begin()
+                SCNTransaction.setAnimationDuration(0.5)
+                
+                material.emission.contents = UIColor.blackColor()
+                
+                SCNTransaction.commit()
+            }
+            
+            material.emission.contents = UIColor.redColor()
+            
+            SCNTransaction.commit()
+            
+            let moveToPoint = SCNVector3(x: result.position.x, y: cameraNode.position.y, z: result.position.z)
+            let distanceVector = cameraNode.position - moveToPoint
+            let distance = GLKVector3Length(SCNVector3ToGLKVector3(distanceVector))
+            let speed: Float = 3
+            let duration = NSTimeInterval(distance / speed)
+            let moveAction = SCNAction.moveTo(moveToPoint, duration: duration)
+            cameraNode.runAction(moveAction)
+        }
+    }
+    
+    func handlePan(gestureRecognize: UIPanGestureRecognizer) {
+//        let translation = gestureRecognize.translationInView(sceneView)
+        
     }
     
     //
