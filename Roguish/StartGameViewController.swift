@@ -8,11 +8,23 @@
 
 import UIKit
 
-class StartGameViewController : UIViewController {
+class StartGameViewController : UIViewController, GameViewControllerDelegate {
     
     @IBAction func didPressStart() {
+        startGame(width: 50, height: 50)
+    }
+    
+    func startGame(width width: Int, height: Int) {
         let vc = storyboard!.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
-        
+        vc.delegate = self
+        vc.width = width
+        vc.height = width
         presentViewController(vc, animated: false, completion: nil)
+    }
+    
+    func didFinishLevel(vc: GameViewController) {
+        vc.dismissViewControllerAnimated(false) {
+            self.startGame(width: vc.width + 50, height: vc.height + 50)
+        }
     }
 }

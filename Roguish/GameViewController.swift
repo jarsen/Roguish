@@ -16,14 +16,8 @@ let CollisionCategoryEnemy = 4
 let CollisionCategoryWall = 8
 let CollisionCategoryFloor = 16
 
-extension SCNLight {
-    convenience init(type: String, color lightColor: UIColor? = nil) {
-        self.init()
-        self.type = type
-        if let lightColor = lightColor {
-            self.color = lightColor
-        }
-    }
+protocol GameViewControllerDelegate {
+    func didFinishLevel(gameViewController: GameViewController)
 }
 
 class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
@@ -36,7 +30,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     var width = 50
     var height = 50
     
-    var controller: GCController?
+    var delegate: GameViewControllerDelegate?
     
     var map: Dungeon2DMap! {
         didSet {
@@ -218,7 +212,8 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     }
     
     func playerDidWin() {
-        generateMap(width: map.width + 50, height: map.height + 50)
+//        generateMap(width: map.width + 50, height: map.height + 50)
+        delegate?.didFinishLevel(self)
     }
     
     //

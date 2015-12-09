@@ -8,6 +8,16 @@
 
 import SceneKit
 
+extension SCNLight {
+    convenience init(type: String, color lightColor: UIColor? = nil) {
+        self.init()
+        self.type = type
+        if let lightColor = lightColor {
+            self.color = lightColor
+        }
+    }
+}
+
 func * (rotation: SCNVector4, position: SCNVector3) -> SCNVector3 {
     if rotation.w == 0 {
         return position
