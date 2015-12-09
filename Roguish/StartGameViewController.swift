@@ -28,7 +28,7 @@ class StartGameViewController : UIViewController, GameViewControllerDelegate {
     
     func didFinishLevel(vc: GameViewController) {
         vc.dismissViewControllerAnimated(false) {
-            self.startGame(width: vc.width + 50, height: vc.height + 50)
+            self.startGame(width: vc.width + 10, height: vc.height + 10)
         }
     }
 }
