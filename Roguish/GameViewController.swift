@@ -33,6 +33,8 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     
     var scene: SCNScene!
     var cameraNode: SCNNode!
+    var width = 50
+    var height = 50
     
     var controller: GCController?
     
@@ -49,7 +51,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         
         sceneView.scene = SCNScene()
         scene = sceneView.scene!
-        generateMap(width: 50, height: 50)
+        generateMap(width: width, height: height)
 
         sceneView.delegate = self
         

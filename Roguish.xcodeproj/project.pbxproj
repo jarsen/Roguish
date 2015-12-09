@@ -13,6 +13,7 @@
 		1E15F0E21BFA860E003F0367 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E01BFA860E003F0367 /* Main.storyboard */; };
 		1E15F0E41BFA860E003F0367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E31BFA860E003F0367 /* Assets.xcassets */; };
 		1E15F0E71BFA860E003F0367 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E15F0E51BFA860E003F0367 /* LaunchScreen.storyboard */; };
+		1E539AF61C18D574004DFF0A /* StartGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E539AF51C18D574004DFF0A /* StartGameViewController.swift */; };
 		1E5C495B1C13A044005A6AE0 /* Hallway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5C495A1C13A044005A6AE0 /* Hallway.swift */; };
 		1E5C495D1C13A5DB005A6AE0 /* HallwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5C495C1C13A5DB005A6AE0 /* HallwayTests.swift */; };
 		1E5C495F1C14D9E2005A6AE0 /* SceneKitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5C495E1C14D9E2005A6AE0 /* SceneKitHelpers.swift */; };
@@ -46,6 +47,7 @@
 		1E15F0E81BFA860E003F0367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E15F0ED1BFA860E003F0367 /* RoguishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoguishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E15F0F31BFA860E003F0367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E539AF51C18D574004DFF0A /* StartGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartGameViewController.swift; sourceTree = "<group>"; };
 		1E5C495A1C13A044005A6AE0 /* Hallway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hallway.swift; sourceTree = "<group>"; };
 		1E5C495C1C13A5DB005A6AE0 /* HallwayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HallwayTests.swift; sourceTree = "<group>"; };
 		1E5C495E1C14D9E2005A6AE0 /* SceneKitHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneKitHelpers.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				1E15F0DA1BFA860E003F0367 /* AppDelegate.swift */,
 				1E15F0DC1BFA860E003F0367 /* art.scnassets */,
 				1E15F0DE1BFA860E003F0367 /* GameViewController.swift */,
+				1E539AF51C18D574004DFF0A /* StartGameViewController.swift */,
 				1E15F0E01BFA860E003F0367 /* Main.storyboard */,
 				1E15F0E31BFA860E003F0367 /* Assets.xcassets */,
 				1E15F0E51BFA860E003F0367 /* LaunchScreen.storyboard */,
@@ -248,6 +251,7 @@
 				1E5CDAA71BFACF6C00FA1FF4 /* Point.swift in Sources */,
 				1E5CDAAD1BFACFEC00FA1FF4 /* DungeonNode.swift in Sources */,
 				1E5CDAA91BFACF7800FA1FF4 /* Rect.swift in Sources */,
+				1E539AF61C18D574004DFF0A /* StartGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
