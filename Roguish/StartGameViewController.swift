@@ -9,6 +9,8 @@
 import UIKit
 
 class StartGameViewController : UIViewController, GameViewControllerDelegate {
+    @IBOutlet weak var titleText: UITextView!
+    @IBOutlet weak var startButton: UIButton!
     
     @IBAction func didPressStart() {
         startGame(width: 50, height: 50)
@@ -20,6 +22,8 @@ class StartGameViewController : UIViewController, GameViewControllerDelegate {
         vc.width = width
         vc.height = width
         presentViewController(vc, animated: false, completion: nil)
+        self.titleText.hidden = true
+        self.startButton.hidden = true
     }
     
     func didFinishLevel(vc: GameViewController) {

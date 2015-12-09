@@ -67,6 +67,10 @@
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="startButton" destination="He7-zg-6RV" id="jNS-a3-0Fx"/>
+                        <outlet property="titleText" destination="TPG-BG-5sf" id="oSr-Ei-hhY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fsk-1Z-NoG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

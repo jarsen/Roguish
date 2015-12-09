@@ -147,10 +147,10 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     }
     
     func addNorthWall(x: Int, _ y: Int) {
-        let wall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+        let wall = SCNBox(width: 0, height: 3, length: 1, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
-        wallNode.position = SCNVector3Make(Float(x) - 0.5, 0.5, Float(y))
+        wallNode.position = SCNVector3Make(Float(x) - 0.5, 1.5, Float(y))
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
@@ -159,21 +159,21 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     }
     
     func addEastWall(x: Int, _ y: Int) {
-        let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
+        let wall = SCNBox(width: 1, height: 3, length: 0, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
-        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) - 0.5)
+        wallNode.position = SCNVector3Make(Float(x), 1.5, Float(y) - 0.5)
         scene.rootNode.addChildNode(wallNode)
     }
     
     func addSouthWall(x: Int, _ y: Int) {
-        let wall = SCNBox(width: 0, height: 1, length: 1, chamferRadius: 0)
+        let wall = SCNBox(width: 0, height: 3, length: 1, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
-        wallNode.position = SCNVector3Make(Float(x) + 0.5, 0.5, Float(y))
+        wallNode.position = SCNVector3Make(Float(x) + 0.5, 1.5, Float(y))
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
@@ -182,10 +182,10 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     }
     
     func addWestWall(x: Int, _ y: Int) {
-        let wall = SCNBox(width: 1, height: 1, length: 0, chamferRadius: 0)
+        let wall = SCNBox(width: 1, height: 3, length: 0, chamferRadius: 0)
         wall.materials.first!.diffuse.contents = UIImage(named: "cobblestone")
         let wallNode = SCNNode(geometry: wall)
-        wallNode.position = SCNVector3Make(Float(x), 0.5, Float(y) + 0.5)
+        wallNode.position = SCNVector3Make(Float(x), 1.5, Float(y) + 0.5)
         wallNode.physicsBody = .staticBody()
         wallNode.physicsBody!.categoryBitMask = CollisionCategoryWall
         wallNode.physicsBody!.collisionBitMask = CollisionCategoryCharacter | CollisionCategoryEnemy
