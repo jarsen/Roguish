@@ -47,9 +47,42 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sceneView.scene = SCNScene()
+        scene = sceneView.scene!
+        generateMap(width: 50, height: 50)
+
+        sceneView.delegate = self
+        
+        // allows the user to manipulate the camera
+//        sceneView.allowsCameraControl = true
+        
+        // show statistics such as fps and timing information
+        sceneView.showsStatistics = true
+        
+        // configure the view
+        sceneView.backgroundColor = .blackColor()
+        
+        // add gesture recognizers
+        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
+        sceneView.addGestureRecognizer(tapGesture)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        sceneView.addGestureRecognizer(panGesture)
+    }
+    
+    //
+    // MARK: - Map Generation
+    //
+    
+    func generateMap(width width: Int, height: Int) {
         // create a new scene
-        scene = SCNScene()
+        sceneView.playing = false
         scene.physicsWorld.contactDelegate = self
+        
+        scene.rootNode.removeAllAnimations()
+        scene.rootNode.enumerateChildNodesUsingBlock { node, _ in
+            node.removeFromParentNode()
+        }
         
         // create and add a camera to the scene
         cameraNode = SCNNode(geometry: SCNBox(width: 0.5, height: 2, length: 0.5, chamferRadius: 0))
@@ -72,41 +105,16 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
         ambientLightNode.light = SCNLight(type: SCNLightTypeAmbient, color: .darkGrayColor())
         scene.rootNode.addChildNode(ambientLightNode)
         
-        map = generateMap()
-        guard let map = map else { fatalError() }
+        let mapRect = Rect(origin: Point(0,0), size: Size(width: width, height: height))
+        let root = DungeonNode(partition: mapRect)
+        let hallways = root.generateHallways()
+        map = Dungeon2DMap(dungeon: root, hallways: hallways)
+        print(map)
         
         // place the camera
         cameraNode.position = SCNVector3(x: Float(map.startPoint.x), y: 0.5, z: Float(map.startPoint.y))
-
-        // set the scene to the view
-        sceneView.scene = scene
-        sceneView.delegate = self
         
-        // allows the user to manipulate the camera
-//        sceneView.allowsCameraControl = true
         sceneView.playing = true
-        
-        // show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // configure the view
-        sceneView.backgroundColor = .blackColor()
-        
-        // add gesture recognizers
-        let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
-        sceneView.addGestureRecognizer(tapGesture)
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: "handlePan:")
-        sceneView.addGestureRecognizer(panGesture)
-    }
-    
-    func generateMap() -> Dungeon2DMap {
-        let mapRect = Rect(origin: Point(0,0), size: Size(width: 50, height: 50))
-        let root = DungeonNode(partition: mapRect)
-        let hallways = root.generateHallways()
-        let map = Dungeon2DMap(dungeon: root, hallways: hallways)
-        print(map)
-        return map
     }
     
     func init3DMapRepresentation(map: Dungeon2DMap) {
@@ -194,6 +202,21 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     
     func renderer(renderer: SCNSceneRenderer, updateAtTime time: NSTimeInterval) {
         readControlInputs()
+        if playerIsOnExit() {
+            playerDidWin()
+        }
+    }
+    
+    func playerIsOnExit() -> Bool {
+        let exitPosition = SCNVector3(Float(map.endPoint.x), cameraNode.position.y, Float(map.endPoint.y))
+        let exitVector = cameraNode.position - exitPosition
+        let distance = GLKVector3Length(SCNVector3ToGLKVector3(exitVector))
+        print(distance)
+        return distance < 0.5
+    }
+    
+    func playerDidWin() {
+        generateMap(width: map.width + 50, height: map.height + 50)
     }
     
     //
@@ -203,17 +226,24 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate, SCNPhysics
     func readControlInputs() {
         guard let gamepad = GCController.controllers().first?.extendedGamepad else { return }
         
-        let leftRightRotation = CGFloat(gamepad.leftThumbstick.xAxis.value) * -0.1
-//        let upDownRotation = CGFloat(gamepad.leftThumbstick.yAxis.value) * 0.1
-        let rotationAction = SCNAction.rotateByX(0, y: leftRightRotation, z: 0, duration: 0.0)
+        // THIS WORKS, BUT LOSES COLLISION DETECTION... SOMETIMES
+        let leftRightRotation = gamepad.leftThumbstick.xAxis.value * -0.1
+        let rotation = GLKMatrix4MakeYRotation(leftRightRotation)
+        let newTransform = GLKMatrix4Multiply(SCNMatrix4ToGLKMatrix4(cameraNode.transform), rotation)
+        cameraNode.transform = SCNMatrix4FromGLKMatrix4(newTransform)
         
+        // Left joystick - camera rotation
+//        let leftRightRotation = CGFloat(gamepad.leftThumbstick.xAxis.value) * -0.1
+//        let rotationAction = SCNAction.rotateByX(0, y: leftRightRotation, z: 0, duration: 0.0)
+        
+        // Right joystick - movement relative to camera rotation
         let leftRightMovement = gamepad.rightThumbstick.xAxis.value * 0.1
         let forwardBackMovement = gamepad.rightThumbstick.yAxis.value * -0.1
         var movement = cameraNode.rotation * SCNVector3(x: leftRightMovement, y: 0, z: forwardBackMovement)
         movement.y = 0
         let movementAction = SCNAction.moveBy(movement, duration: 0.0)
         
-        let action = SCNAction.group([rotationAction, movementAction])
+        let action = SCNAction.group([movementAction])
         cameraNode.runAction(action)
     }
     
